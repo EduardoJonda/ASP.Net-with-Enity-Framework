@@ -1,0 +1,84 @@
+﻿@model Semana13.Models.Pedidos
+
+@{
+    ViewBag.Title = "ListarPedidoFecha";
+}
+
+<h2>ListarPedidoFecha</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Pedidos</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Fecha Inicio", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("FechaInicio", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.FechaPedido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Fecha Final", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("FechaFin", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.FechaPedido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Cliente", "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdCliente", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdCliente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Mostrar" id="btnMostrar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    <div id="datos">
+    </div>
+
+}
+
+@section Scripts
+{
+    <script>
+        $(function()
+        {
+            // jquery .get enviando un objeto
+            $("#btnMostrar").click(function () {
+                $("#datos").empty();
+                var fecha_inicio = $("#FechaInicio").val();
+                alert("fecha inicio: " + fecha_inicio );
+                var fecha_fin = $("#FechaFin").val();
+                alert("fecha fin: " + fecha_fin);
+                var cliente = $("#IdCliente").val();
+                alert("cliente: " + cliente);
+                var url = "@Url.Action("ListadoPedidoFechaCliente", "Pedido")";
+                var data = { fecha_inicio: fecha_inicio, fecha_fin: fecha_fin, cliente: cliente }
+
+                // jquery con get cargar una secion de pagina de manera asincrona
+                $.get(url, data).done(function (data) {
+                    $("#datos").append(data);
+                }).fail(errorAjax());
+            });
+            function errorAjax() {
+                console.log(err.responseText);
+            }
+        });
+    </script>
+
+}
+

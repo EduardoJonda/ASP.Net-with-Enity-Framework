@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NeptunoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NombreCompañia" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NombreContacto" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="CargoContacto" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Ciudad" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Region" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CodPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Pais" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="estado" Type="Int32" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Clientes" FromRole="Clientes" ToRole="Pedidos" />
+  </EntityType>
+  <EntityType Name="Empleados">
+    <Key>
+      <PropertyRef Name="IdEmpleado" />
+    </Key>
+    <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cargo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Tratamiento" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="3" />
+    <Property Name="FechaContratacion" Type="DateTime" Precision="3" />
+    <Property Name="Direccion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Ciudad" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Region" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CodPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Pais" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="TelDomicilio" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="Extension" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Jefe" Type="Int32" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Empleados" FromRole="Empleados" ToRole="Pedidos" />
+  </EntityType>
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="IdPedido" />
+    </Key>
+    <Property Name="IdPedido" Type="Int32" Nullable="false" />
+    <Property Name="IdCliente" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdEmpleado" Type="Int32" />
+    <Property Name="FechaPedido" Type="DateTime" Precision="3" />
+    <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+    <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+    <Property Name="FormaEnvio" Type="Int32" />
+    <Property Name="Cargo" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Destinatario" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="DireccionDestinatario" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="CiudadDestinatario" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="RegionDestinatario" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CodPostalDestinatario" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PaisDestinatario" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Pedidos_Clientes" FromRole="Pedidos" ToRole="Clientes" />
+    <NavigationProperty Name="Empleados" Relationship="Self.FK_Pedidos_Empleados" FromRole="Pedidos" ToRole="Empleados" />
+    <NavigationProperty Name="Detalles_de_pedidos" Relationship="Self.FK_Detalles_de_pedidos_Pedidos" FromRole="Pedidos" ToRole="Detalles_de_pedidos" />
+  </EntityType>
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="Int32" Nullable="false" />
+    <Property Name="NombreProducto" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdProveedor" Type="Int32" />
+    <Property Name="IdCategoria" Type="Int32" />
+    <Property Name="CantidadPorUnidad" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PrecioUnidad" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="UnidadesEnExistencia" Type="Int16" />
+    <Property Name="UnidadesEnPedido" Type="Int16" />
+    <Property Name="NivelNuevoPedido" Type="Int16" />
+    <Property Name="Suspendido" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Detalles_de_pedidos" Relationship="Self.FK_Detalles_de_pedidos_Productos" FromRole="Productos" ToRole="Detalles_de_pedidos" />
+    <NavigationProperty Name="Proveedores" Relationship="Self.FK_Productos_Proveedores" FromRole="Productos" ToRole="Proveedores" />
+  </EntityType>
+  <EntityType Name="Proveedores">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+    <Property Name="NombreCompañia" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NombreContacto" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="CargoContacto" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Direccion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Ciudad" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Region" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CodPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Pais" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Telefono" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+    <Property Name="PaginaPrincipal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK_Productos_Proveedores" FromRole="Proveedores" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Detalles_de_pedidos">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+      <PropertyRef Name="PrecioUnidad" />
+      <PropertyRef Name="Cantidad" />
+      <PropertyRef Name="Descuento" />
+    </Key>
+    <Property Name="IdPedido" Type="Int32" />
+    <Property Name="IdProducto" Type="Int32" Nullable="false" />
+    <Property Name="PrecioUnidad" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Cantidad" Type="Int16" Nullable="false" />
+    <Property Name="Descuento" Type="Single" Nullable="false" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_Detalles_de_pedidos_Pedidos" FromRole="Detalles_de_pedidos" ToRole="Pedidos" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK_Detalles_de_pedidos_Productos" FromRole="Detalles_de_pedidos" ToRole="Productos" />
+  </EntityType>
+  <Association Name="FK_Pedidos_Clientes">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedidos_Empleados">
+    <End Role="Empleados" Type="Self.Empleados" Multiplicity="0..1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleados">
+        <PropertyRef Name="IdEmpleado" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="IdEmpleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalles_de_pedidos_Pedidos">
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="0..1" />
+    <End Role="Detalles_de_pedidos" Type="Self.Detalles_de_pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedidos">
+        <PropertyRef Name="IdPedido" />
+      </Principal>
+      <Dependent Role="Detalles_de_pedidos">
+        <PropertyRef Name="IdPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalles_de_pedidos_Productos">
+    <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+    <End Role="Detalles_de_pedidos" Type="Self.Detalles_de_pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="Detalles_de_pedidos">
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Productos_Proveedores">
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
+    <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedores">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="Productos">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NeptunoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+    <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+    <EntitySet Name="Productos" EntityType="Self.Productos" />
+    <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
+    <EntitySet Name="Detalles_de_pedidos" EntityType="Self.Detalles_de_pedidos" />
+    <AssociationSet Name="FK_Pedidos_Clientes" Association="Self.FK_Pedidos_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedidos_Empleados" Association="Self.FK_Pedidos_Empleados">
+      <End Role="Empleados" EntitySet="Empleados" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalles_de_pedidos_Pedidos" Association="Self.FK_Detalles_de_pedidos_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
+      <End Role="Detalles_de_pedidos" EntitySet="Detalles_de_pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalles_de_pedidos_Productos" Association="Self.FK_Detalles_de_pedidos_Productos">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="Detalles_de_pedidos" EntitySet="Detalles_de_pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Productos_Proveedores" Association="Self.FK_Productos_Proveedores">
+      <End Role="Proveedores" EntitySet="Proveedores" />
+      <End Role="Productos" EntitySet="Productos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
